@@ -154,8 +154,8 @@
                     <span>Date</span> <input type="date" id='date' required> 
                     <span>Spent By</span> <select id='person'></select>
                     <span>Amount</span> <input type="number" step="0.01" id='amount' required>
-                    <span>Spent On</span> <input type="text" id='item' required> 
-                    <span>Shared By</span><select data-placeholder=" " multiple id='share' required> </select>
+                    <span>Spent On</span> <input type="text" id='item' required > 
+                    <span>Shared By</span><select data-placeholder=" " multiple id='share' required > </select>
                 </div>
                 <button id='addButton' onclick="addNewRecords()">Add Item</button>
             </form>
@@ -172,21 +172,7 @@
 
         </div>
             <div id="sheet">
-                <table id='myTable'>
-                    <col style="width:15%">
-                    <col style="width:15%">
-                    <col style="width:30%">
-                    <col style="width:10%">
-                    <col style="width:30%">
-                  </colgroup>
-                    <tr>
-                        <th>Date</th>
-                        <th>Spent By</th>
-                        <th>Item</th>
-                        <th>Amount</th>
-                        <th>Shared By</th>
-                    </tr>
-                </table>
+                <table id='myTable'> </table>
             </div>
 
     </div>
@@ -215,15 +201,18 @@
     // ]
     updateRecords()
 
+
     function addNewRecords(){
         if($('#date').val()=='' || $('#amount').val()=='' || $('#item').val()=='' || $('#share').val()==null) return  // really bad
         if($('#share').val().length==1 && $('#share').val()[0]!='All') {
-            alert('Spend and shared by a single person not allowed'); return
+            alert('Spend and shared by a single person not allowed');
             $('#share').val('').trigger('chosen:updated');
+            return
         }
         if($('#share').val().length!=1 && $('#share').val().includes('All')) {
-            alert("Can't use other person when 'All' is provided"); return
+            alert("Can't use other person when 'All' is provided"); 
             $('#share').val('').trigger('chosen:updated');
+            return
         }
         records.push(
             {
@@ -235,17 +224,19 @@
             }
         )
         updateRecords()
+        // $("#share").val('').trigger("chosen:updated")
     }
 
 
 
     function createTable(){
         document.getElementById('myTable').innerHTML = `
-        <col style="width:15%">
-        <col style="width:15%">
-        <col style="width:30%">
-        <col style="width:10%">
-        <col style="width:30%">
+        <colgroup>
+            <col style="width:15%">
+            <col style="width:15%">
+            <col style="width:30%">
+            <col style="width:10%">
+            <col style="width:30%">
         </colgroup>
         <tr>
             <th>Date</th>
@@ -274,8 +265,8 @@
         for(let rec of records){  
             // spent calculation
             spent[rec.person] += rec.amount
-            owe[rec.person] -= rec.amount
             //owe calculation
+            owe[rec.person] -= rec.amount
             shareBy = rec.shareBy.length==1 && rec.shareBy[0]=='All' ? users : rec.shareBy
             for(let pp of shareBy) owe[pp] += rec.amount/shareBy.length
         }
