@@ -1,0 +1,175 @@
+html,body{
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+#header{
+    background-color: #0cb75e;
+}
+#root, #analysis, #settings{
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+    width: 100%;
+    height: 10%;
+}
+#summery{
+    width: 23%;
+    background-color: aqua;
+    background-image: linear-gradient(0deg, #ecef55, #0cb75e);
+    box-shadow: rgba(0, 0, 0, 0.45) 4px 13px 13px 0px;
+    z-index: 99;
+}
+.headerName{
+    display: inline-block;
+    font-size: 35px;
+    background-color: #0cb75e;
+    padding: 0 0 3px 9px ;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.chosen-single,.chosen-choices,.chosen-drop{
+    border-radius: 0 !important;
+    font-size: 21px;
+}
+
+#sheet{
+    flex: 1;
+    /* background-color: burlywood; */
+    font-size: 17px;
+    /* height: 100vh; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.SpentSum{
+    margin: 30px 3px 0 3px ;
+    border: 1px solid black;
+    border-radius: 3px 3px 0 0 ;
+    /* padding: 0 3px 0 3px; */
+}
+.SpentHead{
+    text-align: center;
+    font-size: 27px;
+    margin:0 0 10px 0;
+    border-bottom: 3px solid black;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.sChildName, .sChildAmount{
+    display: inline;
+    font-size: 23px;
+}
+.sChildName{
+    margin: 0 0 0 10px;
+}
+.sChildAmount{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    float: right;
+    margin: 0 19px 0 0 ;
+}
+table{
+    width: 99.5%;
+    /* margin: 3px; */
+    margin: 13px 9px 100px 2px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 3px 0 9px 0;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+tr:first-child th{
+    border-bottom: 2px solid black;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: inset 1px 1px #000, 1px 1px #000;
+}
+
+.pages{
+    float: right;
+    margin-top: 13px;
+}
+.pages div{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#editBar{
+    display: none;
+
+}
+
+#editBar button{
+    font-size: 23px;
+    font-family:inherit;
+    margin: 17px 0 3px 0;
+}
+
+#analysis,#settings{
+    display: none;
+}
+
+
+#expenseByDate{
+    width: 100%;
+    height: 50%;
+    display: block;
+}
+
+
+
+#expenseByUser, #expenseByCategory{
+    width: 50%;
+    height: 50%;
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 50px;
+
+}
+
+
+#container{
+    width: 50%;
+    padding-top: 21px;
+    /* background-color: blue; */
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-columns: 25% 75%;
+}
+
+.sLabel{
+    font-size: 21px;
+}
+
+.sInput{
+    font-size: 21px;
+    height: 5pc;
+    line-height: 1pc;
+    margin: 3px 3px 10px 3px;
+    resize: vertical;
+}
+
+.sButtons{
+    grid-column: 1 / span 2; 
+    margin: 5px 35% 9px 35%;
+    height: 2pc;
+    font-size: 21px;
+}
+
+.sButtons:before{
+    background-image: url(./save.svg);
+    width: 1pc;
+    height: 1pc;
+}

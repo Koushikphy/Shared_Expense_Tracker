@@ -3,294 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
-    <style>
-        html,body{
-            height: 100%;
-            margin: 0;
-        }
-        body{
-            display: flex;
-            /* height: 100vh; */
-            flex-direction: column;
-            /* overflow: hidden; */
-            /* height: 100%; */
-        }
-        #header{
-            font-size: 35px;
-            background-color: #0cb75e;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, monospace;
-            padding: 0 0 3px 9px ;
-            /* height: 500px; */
-        }
-        #root{
-            display: flex;
-            flex-flow: row;
-            flex: 1;
-            width: 100%;
-            height: 10%;
-        }
-        #summery{
-            width: 23%;
-            background-color: aqua;
-            /* height: 100vh; */
-            background-image: linear-gradient(0deg, #ecef55, #0cb75e);
-            box-shadow: rgba(0, 0, 0, 0.45) 4px 13px 13px 0px;
-            z-index: 99;
-        }
-        /* #main{ */
-            /* flex: 1; */
-            /* background-color: blanchedalmond; */
-            /* display: flex; */
-            /* flex-flow: column; */
-        /* } */
-        #add{
-            /* background-color: #eef792; */
-            margin: 15px 3px 10px 3px;
-            border-radius: 3px;
-            font-size: 23px;
-            /* padding: 21px 0px 21px 21px; */
-            /* display: flex; */
-            /* flex-flow: row; */
-            /* align-items: center; */
-            /* border: .5px solid black; */
-            /* box-shadow: rgba(0, 0, 0, 0.45) 0px 13px 12px 6px; */
-            border: 1px solid black;
-            text-align: center;
-        }
-        #addButton{
-            /* height: 3pc; */
-            font-size: 23px;
-            /* width: 5pc; */
-            /* vertical-align: auto; */
-            border-radius: 3px;
-            font-family:inherit;
-            margin: 17px 0 3px 0;
-        }
-
-        #addList{
-            display: grid;
-            grid-template-rows: repeat(5,max-content);
-            grid-template-columns: 40% 60%;
-            row-gap: 3px;
-            /* column-gap: 9px; */
-            text-align: left;
-        }
-        input,select{
-            font-size: 20px;
-            /* width: 200px; */
-        }
-        .chosen-single,.chosen-choices,.chosen-drop{
-            border-radius: 0 !important;
-            font-size: 21px;
-        }
-
-        #sheet{
-            flex: 1;
-            /* background-color: burlywood; */
-            font-size: 23px;
-            /* height: 100vh; */
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        .SpentSum{
-            margin: 30px 3px 0 3px ;
-            border: 1px solid black;
-            border-radius: 3px 3px 0 0 ;
-            /* padding: 0 3px 0 3px; */
-        }
-        .SpentHead{
-            text-align: center;
-            font-size: 27px;
-            margin:0 0 10px 0;
-            border-bottom: 3px solid black;
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-        .sChildName, .sChildAmount{
-            display: inline;
-            font-size: 23px;
-        }
-        .sChildName{
-            margin: 0 0 0 10px;
-        }
-        .sChildAmount{
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bolder;
-            float: right;
-            margin: 0 19px 0 0 ;
-        }
-        table{
-            width: 99.5%;
-            /* margin: 3px; */
-            margin: 13px 9px 100px 2px;
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-        }
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: center;
-            padding: 3px 0 9px 0;
-        }
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-        tr:first-child th{
-            border-bottom: 2px solid black;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            box-shadow: inset 1px 1px #000, 1px 1px #000;
-        }
-    </style>
+    <title> Shared Expense Tracker </title>
+    <link rel="stylesheet" href="https://bossanova.uk/jsuites/v3/jsuites.css" type="text/css" />
+    <link rel="stylesheet" href="https://bossanova.uk/jexcel/v4/jexcel.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://bossanova.uk/jsuites/v3/jsuites.js"></script>
+    <script src="https://bossanova.uk/jexcel/v4/jexcel.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <link href="style.css" rel="stylesheet">
+    <script src="./utils.js"></script>
 </head>
 <body>
-    <div id="header">Expense tracker</div>
+    <div id="header">
+        <div class="headerName">Shared Expense Tracker</div>
+        <div class='pages'>
+            <div onclick="selectPage(0)">Home </div>
+            <div onclick="selectPage(1)">Analytics</div>
+            <div onclick="selectPage(2)">Settings</div>
+        </div>
+    </div>
     <div id="root">
         <div id="summery">
-
-            <form id="add" action="" onsubmit="this.reset(); return false">
-                <div id="addList" >
-                    <span>Date</span> <input type="date" id='date' required> 
-                    <span>Spent By</span> <select id='person'></select>
-                    <span>Amount</span> <input type="number" step="0.01" id='amount' required>
-                    <span>Spent On</span> <input type="text" id='item' required > 
-                    <span>Shared By</span><select data-placeholder=" " multiple id='share' required > </select>
-                </div>
-                <button id='addButton' onclick="addNewRecords()">Add Item</button>
-            </form>
-
             <div class="SpentSum">
                 <div class="SpentHead">Spent By</div>
                 <div id ='spendStat'></div>
             </div>
 
             <div class="SpentSum">
-                <div class="SpentHead">Owed By</div>
+                <div class="SpentHead">Total Owe</div>
+                <div id ='totOweStat'></div>
+            </div>
+
+            <div class="SpentSum">
+                <div class="SpentHead">Net Owe</div>
                 <div id ='oweStat'></div>
             </div>
-
         </div>
-            <div id="sheet">
-                <table id='myTable'> 
-                    <colgroup>
-                        <col style="width:15%">
-                        <col style="width:15%">
-                        <col style="width:30%">
-                        <col style="width:10%">
-                        <col style="width:30%">
-                    </colgroup>
-                    <tr>
-                        <th>Date</th>
-                        <th>Spent By</th>
-                        <th>Item</th>
-                        <th>Amount</th>
-                        <th>Shared By</th>
-                    </tr>
-                    <tbody id='tableContent'></tbody>
-                </table>
-            </div>
-
+        <div id="sheet"> </div>
     </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+
+    <div id="analysis">
+       <div id='expenseByDate'></div>
+       <div id='expenseByUser'></div><div id='expenseByCategory'></div>
+    </div>
+    <div id="settings">
+        <div id="container">
+            <div class="sLabel">User List</div>
+            <textarea type="text" name="" id="uList" class="sInput" placeholder="Provide userlist with comma" spellcheck="false"></textarea>
+            <div class="sLabel">Category List</div>
+            <textarea type="text" name="" id="cList" class="sInput" placeholder="Provide categories with comma" spellcheck="false"></textarea>
+            <button class="sButtons" onclick="updateLists()">Update</button>
+            <!-- <input type="file" name="" id="dummy" style="display:none;" onchange="importData(event)"> -->
+            <button class="sButtons" onclick="importData()">Import Data</button>
+            <button class="sButtons" onclick="exportData()">Export Data</button>
+        </div>
+    </div>
+
 <script>
-    let uu = localStorage.getItem('users')
-    var users = uu!=null ? JSON.parse(uu) : [ 'AAA', 'BBB', 'CCC']   // retrieve user from localstorage or set it here
 
-    document.getElementById('person').innerHTML = users.map(i=>`<option value="${i}">${i}</option>`).join('')
-    document.getElementById('share').innerHTML = ['All',...users].map(i=>`<option value="${i}">${i}</option>`).join('')
-    $("#share").chosen({no_results_text: "Oops, nothing found!",width: '100%'});     
-    $("#person").chosen({no_results_text: "Oops, nothing found!",width: '100%'});  
-
-    let rr = localStorage.getItem('records')
-    var records = rr!=null? JSON.parse(rr) : []
-    // var records = [
-    // {
-    //     amount: 75,
-    //     date: "2020-11-05",
-    //     item: "Food",
-    //     person: "BBB",
-    //     shareBy: ["All"]
-    // }
-    // ]
-    updateRecords()
+    const expenseByDate     = document.getElementById('expenseByDate');
+    const expenseByUser     = document.getElementById('expenseByUser');
+    const expenseByCategory = document.getElementById('expenseByCategory');
+    var currentEditabele=undefined, saved=false, users, categories, records, myTable;
 
 
-    function addNewRecords(){
-        if($('#date').val()=='' || $('#amount').val()=='' || $('#item').val()=='' || $('#share').val()==null) return  // really bad
-        if($('#share').val().length==1 && $('#share').val()[0]!='All') {
-            alert('Spend and shared by a single person not allowed');
-            $('#share').val('').trigger('chosen:updated');
-            return
-        }
-        if($('#share').val().length!=1 && $('#share').val().includes('All')) {
-            alert("Can't use other person when 'All' is provided"); 
-            $('#share').val('').trigger('chosen:updated');
-            return
-        }
-        records.push(
-            {
-                'date' : $('#date').val(),
-                'person' : $('#person').val(),
-                'amount' : parseFloat($('#amount').val()),
-                'item' : $('#item').val(),
-                'shareBy':$('#share').val()
-            }
-        )
-        updateRecords()
-        // $("#share").val('').trigger("chosen:updated")
+
+    window.onload = () =>{
+        Plotly.newPlot(expenseByDate, new Array(4).fill(0).map(u=>clone(lineConfig)),layout, config )
+        Plotly.newPlot(expenseByUser, [pieConfig],layout2, config );
+        Plotly.newPlot(expenseByCategory, [pieConfig],layout2, config );
+        loadDataFromStorage()
+        startTable()
+
+        updateListDOMs()
+        updateTable()
+        if(records.length) updateRecords()
+    }
+
+    window.onbeforeunload = () =>{
+        if(!saved) alert('Save first')
     }
 
 
 
-    function createTable(){
-        document.getElementById('tableContent').innerHTML = records.map(i=>`
-        <tr>
-            <td>${i.date}</td>
-            <td>${i.person}</td>
-            <td>${i.item}</td>
-            <td>${i.amount}</td>
-            <td>${i.shareBy}</td>
-        </tr>
-        `).join('')
+    function loadDataFromStorage(){
+        [users, categories, records] = ['users', 'categories', 'records'].map(e=>{
+            let uu = localStorage.getItem(e)
+            return uu!=null? JSON.parse(uu) : []
+        })
+
+
     }
 
+
+    function saveDataToStorage(){
+        ['users', 'categories', 'records'].forEach(e=>{
+            localStorage.setItem(e, JSON.stringify(window[e]))
+        })
+
+    }
+
+
+    function updateListDOMs(){
+        $('#uList').val(users.join(','))
+        $('#cList').val(categories.join(','))
+        myTable.options.columns[1].source = users
+        myTable.options.columns[3].source = categories
+        myTable.options.columns[5].source = ['All',...users]
+    }
+
+
+    function updateLists(){
+        users = $('#uList').val().split(',').map(e=>e.trim())
+        categories = $('#cList').val().split(',').map(e=>e.trim())
+        saveDataToStorage()
+        updateListDOMs()
+        selectPage(0)
+    }
 
 
     function calculateShares(){
-        var spent = Object.fromEntries(users.map(i=>[i,0]))
-        var owe = Object.fromEntries(users.map(i=>[i,0]))
-        var len = users.length;
-        for(let rec of records){  
+
+        var spent  = Object.fromEntries(users.map(i=>[i,0]))
+        var totOwe = Object.fromEntries(users.map(i=>[i,0]))
+        var netOwe = Object.fromEntries(users.map(i=>[i,0]))
+
+        for(let rec of records){
+            let amount = parseFloat(rec.amount);
+            let shareBy = rec.shareBy.split(';');
+            shareBy = shareBy.length==1 && shareBy[0]=='All' ? users : shareBy;
+            let sAmount = amount/shareBy.length;
             // spent calculation
-            spent[rec.person] += rec.amount
+            spent[rec.person] += amount
             //owe calculation
-            owe[rec.person] -= rec.amount
-            shareBy = rec.shareBy.length==1 && rec.shareBy[0]=='All' ? users : rec.shareBy
-            for(let pp of shareBy) owe[pp] += rec.amount/shareBy.length
+            for(let pp of shareBy) {
+                netOwe[pp] += sAmount
+                totOwe[pp] += sAmount
+            }
+            netOwe[rec.person] -= amount
         }
-        document.getElementById('spendStat').innerHTML = users.map(i=>`
+
+        $("#spendStat").html(users.map(i=>`
         <div class="SpentDetails">
             <div class="sChildName"> ${i} </div>
             <div class="sChildAmount"> ${spent[i].toFixed(2)}</div>
         </div>
-        `).join('')
-        document.getElementById('oweStat').innerHTML = users.map(i=>`
+        `).join(''))
+
+        $("#oweStat").html(users.map(i=>`
         <div class="SpentDetails">
             <div class="sChildName"> ${i} </div>
-            <div class="sChildAmount"> ${owe[i].toFixed(2)} </div>
+            <div class="sChildAmount"> ${netOwe[i].toFixed(2)} </div>
         </div>
-        `).join('')
+        `).join(''))
+
+        $("#totOweStat").html(users.map(i=>`
+        <div class="SpentDetails">
+            <div class="sChildName"> ${i} </div>
+            <div class="sChildAmount"> ${totOwe[i].toFixed(2)} </div>
+        </div>
+        `).join(''))
     }
 
+
     function updateRecords(){
-        createTable()
         calculateShares()
-        localStorage.setItem('users', JSON.stringify(users))
-        localStorage.setItem('records', JSON.stringify(records))
+        saveDataToStorage()
+        updatePlot()
     }
+
+
+
+    function updatePlot(){
+        var tmp = transpose(
+                uniqueDates(records.map(i=>i.date)).map(dt=> 
+                    [dt, ...users.map(u=>sum(records.filter(i=>i.date==dt).filter(i=>i.person==u).map(i=>parseFloat(i.amount))))]
+                ).map(arr=>[...arr, sum(arr.slice(1))])
+            )
+
+        Plotly.restyle(expenseByDate, {
+            x : [tmp[0]],
+            y : tmp.splice(1),
+            name: [...users,'Total']
+        })
+
+        var tmp = transpose(users.map(u=>[u, sum(records.filter(i=>i.person==u).map(i=>parseFloat(i.amount)))]))
+
+        Plotly.restyle(expenseByUser,{
+            values: [tmp[1]],
+            labels: [tmp[0]],
+        })
+
+        var tmp = transpose(categories.map(u=>[u, sum(records.filter(i=>i.category==u).map(i=>parseFloat(i.amount)))])
+        )
+        Plotly.restyle(expenseByCategory,{
+            values: [tmp[1]],
+            labels: [tmp[0]],
+        })
+
+    }
+
+
+    function importData(){
+
+        alert('This will remove all existing records');
+
+        const fileInput = document.createElement("input")
+        fileInput.type='file'
+        fileInput.style.display='none'
+        fileInput.onchange=(ev)=>{
+            var file = ev.target.files[0]
+            if(!file) return
+
+            var reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+
+            reader.onload = (event) => {
+                let content = JSON.parse(event.target.result); 
+                users = content.users
+                categories = content.categories
+                records = content.records
+                updateListDOMs()
+                updateRecords()
+                updateTable()
+                selectPage(0)
+            }
+        }
+        document.body.appendChild(fileInput)
+        fileInput.click()
+        fileInput.remove()
+    }
+
+
+    function exportData(){
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify({users,categories,records},null,4)], {type: "text/plain"}));
+        a.setAttribute("download", "data.json");
+        document.body.appendChild(a);
+        a.click();
+        a.remove()
+    }
+
+
+    function selectPage(m){
+        $("#root,#analysis,#settings").hide()
+        $(["#root","#analysis","#settings"][m]).show()
+        window.dispatchEvent(new Event('resize'));
+    }
+
+
+    function startTable(){
+        myTable = jexcel(document.getElementById('sheet'), {
+            columns: [
+                {type:'calendar',title:'date', options: { format:'DD-MM-YYYY', resetButton:false, fullscreen:true }},
+                {type:'dropdown',title:'Spent By', autocomplete:true, multiple:false, source: users},
+                {type:'text',    title:'Item' },
+                {type:'dropdown',title:'Category', autocomplete:true, multiple:false, source: categories},
+                {type:'numeric', title:'Amount' },
+                {type:'dropdown',title:'Shared By',autocomplete:true, multiple:true,  source : ['All',...users]},
+            ],
+            // tableOverflow:true,
+            defaultColWidth         : (document.getElementById('sheet').offsetWidth-55)/6,
+            csvFileName             : 'data',
+            csvDelimiter            : ',',
+            allowRenameColumn       : false,
+            search                  : true,
+            pagination              : 15,
+            csvHeaders              : true,
+            minSpareRows            : true,
+            includeHeadersOnDownload: true,
+            columnDrag              : false,
+            rowDrag                 : false,
+            allowInsertColumn       : false,
+            allowDeleteColumn       : false,
+            allowRenameColumn       : false,
+            wordWrap                : true,
+            selectionCopy           : false,
+            onchange                : ()=>{
+                let tt = myTable.getData().filter(e=>!e.includes(''))
+                if(!isEqual(tt,records.map(Object.values))) {
+                    records = tt.map(e=>Object.fromEntries(transpose([['date','person','item','category','amount','shareBy'],e])))
+                    updateRecords()
+                }
+            }
+        });
+    }
+
+
+
+
+    function updateTable(){
+        if(records.length) myTable.setData(records.map(e=>[e.date, e.person, e.item, e.category, e.amount, e.shareBy]))
+    }
+
+
 </script>
 </body>
 </html>
