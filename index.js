@@ -62,7 +62,7 @@ function calculateShares(){
 
     for(let rec of records){
         let amount = parseFloat(rec.amount);
-        let shareBy = rec.shareBy.split(';');
+        let shareBy = rec.shareBy.split(';').map(e=>e.trim());
         shareBy = shareBy.length==1 && shareBy[0]=='All' ? users : shareBy;
         let sAmount = amount/shareBy.length;
         // spent calculation
@@ -190,7 +190,7 @@ function startTable(){
         csvDelimiter            : ',',
         allowRenameColumn       : false,
         search                  : true,
-        pagination              : 15,
+        pagination              : 13,
         csvHeaders              : true,
         minSpareRows            : true,
         includeHeadersOnDownload: true,
@@ -201,6 +201,7 @@ function startTable(){
         allowRenameColumn       : false,
         wordWrap                : true,
         selectionCopy           : false,
+        copyCompatibility       :true,
         onchange                : ()=>{
             let tt = myTable.getData().filter(e=>!e.includes(''))
             if(!isEqual(tt,records.map(Object.values))) {
