@@ -145,6 +145,7 @@ function importData(){
             users = content.users
             categories = content.categories
             records = content.records
+            // console.log(records)
             updateListDOMs()
             updateRecords()
             updateTable()
@@ -177,12 +178,12 @@ function selectPage(m){
 function startTable(){
     myTable = jexcel(document.getElementById('sheet'), {
         columns: [
-            {type:'calendar',title:'date', options: { format:'DD-MM-YYYY', resetButton:false, fullscreen:true }},
+            {type:'calendar',title:'Date', options: { format:'DD-MM-YYYY', resetButton:false, fullscreen:true }},
             {type:'dropdown',title:'Spent By', autocomplete:true, multiple:false, source: users},
             {type:'text',    title:'Item' },
             {type:'dropdown',title:'Category', autocomplete:true, multiple:false, source: categories},
             {type:'numeric', title:'Amount' },
-            {type:'dropdown',title:'Shared By',autocomplete:true, multiple:true,  source : ['All',...users]},
+            {type:'dropdown',title:'Shared By',autocomplete:true, multiple:true, source : ['All',...users]},
         ],
         // tableOverflow:true,
         defaultColWidth         : (document.getElementById('sheet').offsetWidth-55)/6,
@@ -190,7 +191,7 @@ function startTable(){
         csvDelimiter            : ',',
         allowRenameColumn       : false,
         search                  : true,
-        pagination              : 13,
+        // pagination              : 13,
         csvHeaders              : true,
         minSpareRows            : true,
         includeHeadersOnDownload: true,
@@ -201,7 +202,7 @@ function startTable(){
         allowRenameColumn       : false,
         wordWrap                : true,
         selectionCopy           : false,
-        copyCompatibility       :true,
+        copyCompatibility       : true,
         onchange                : ()=>{
             let tt = myTable.getData().filter(e=>!e.includes(''))
             if(!isEqual(tt,records.map(Object.values))) {
